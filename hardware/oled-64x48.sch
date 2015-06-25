@@ -30,6 +30,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:tinkerforge
+LIBS:oled-64x48-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -679,4 +680,45 @@ Wire Wire Line
 	2800 3650 2800 3050
 Wire Wire Line
 	2900 3550 2900 2950
+$Comp
+L R_PACK4 RP1
+U 1 1 558C3DD4
+P 4350 2850
+F 0 "RP1" H 4350 3300 40  0000 C CNN
+F 1 "2k2" H 4350 2800 40  0000 C CNN
+F 2 "kicad-libraries:0603X4" H 4350 2850 60  0001 C CNN
+F 3 "" H 4350 2850 60  0000 C CNN
+	1    4350 2850
+	0    1    1    0   
+$EndComp
+$Comp
+L 3V3 #PWR023
+U 1 1 558C3F05
+P 4550 2500
+F 0 "#PWR023" H 4550 2600 40  0001 C CNN
+F 1 "3V3" H 4550 2625 40  0000 C CNN
+F 2 "" H 4550 2500 60  0000 C CNN
+F 3 "" H 4550 2500 60  0000 C CNN
+	1    4550 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 3050 4400 3550
+Connection ~ 4400 3550
+Wire Wire Line
+	4500 3050 4500 3650
+Connection ~ 4500 3650
+Wire Wire Line
+	4600 3050 4600 3250
+Connection ~ 4600 3250
+Wire Wire Line
+	4700 3050 4700 3350
+Connection ~ 4700 3350
+Wire Wire Line
+	4400 2650 4700 2650
+Wire Wire Line
+	4550 2500 4550 2650
+Connection ~ 4550 2650
+Connection ~ 4500 2650
+Connection ~ 4600 2650
 $EndSCHEMATC
