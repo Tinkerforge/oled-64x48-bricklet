@@ -30,6 +30,9 @@
 
 #define PIXEL_W 64
 #define PIXEL_H 48
+#define PIXEL_COL_START 32
+#define MAX_CHARS_W 13
+#define MAX_CHARS_H 6
 
 #define CONTROL_CO (1 << 7)
 #define CONTROL_DC (1 << 6)

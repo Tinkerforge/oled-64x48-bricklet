@@ -52,7 +52,7 @@ const uint8_t init_conf[] = {
 	1, SSD1306_DISPLAYALLON_RESUME,
 	1, SSD1306_NORMALDISPLAY,
 	1, SSD1306_DISPLAYON,
-	3, SSD1306_COLUMNADDR,          32, 95,
+	3, SSD1306_COLUMNADDR,          PIXEL_COL_START, PIXEL_COL_START + PIXEL_W-1,
 	3, SSD1306_PAGEADDR,            0, 5,
 };
 
@@ -142,7 +142,7 @@ void constructor(void) {
 	BC->current_num       = 0;
 	BC->contrast          = 0x8F;
 	BC->invert            = false;
-	BC->last_write_char_x = 254;
+	BC->last_write_char_x = 254; // Initialize with unreachable value
 	BC->last_write_char_y = 254;
 
 #ifdef USE_I2C
@@ -183,13 +183,17 @@ void destructor(void) {
 void write_char(uint8_t x, uint8_t y, char c) {
 	// If the next char is in same row at next place we can reuse the window
 	if((BC->last_write_char_x != x+1) || (BC->last_write_char_y != y)) {
-		const uint8_t col[3] = {SSD1306_COLUMNADDR, 32 + y*5, 32 + PIXEL_W-1};
+		const uint8_t col[3] = {SSD1306_COLUMNADDR, PIXEL_COL_START + y*5, PIXEL_COL_START + PIXEL_W-1};
 		const uint8_t row[3] = {SSD1306_PAGEADDR, x, x};
 		ssd1306_command(col, 3);
 		ssd1306_command(row, 3);
 	}
 
-    ssd1306_data(font + c*5, 5);
+	if(y == MAX_CHARS_W-1) {
+		ssd1306_data(font + c*5, 4); // We can't draw the last char completely
+	} else {
+		ssd1306_data(font + c*5, 5);
+	}
 }
 
 void tick(const uint8_t tick_type) {
@@ -201,7 +205,7 @@ void tick(const uint8_t tick_type) {
 }
 
 void apply_window(void) {
-	const uint8_t col[3] = {SSD1306_COLUMNADDR, 32+BC->column_from, 32+BC->column_to};
+	const uint8_t col[3] = {SSD1306_COLUMNADDR, PIXEL_COL_START+BC->column_from, PIXEL_COL_START+BC->column_to};
 	const uint8_t row[3] = {SSD1306_PAGEADDR, BC->row_from, BC->row_to};
 	ssd1306_command(col, 3);
 	ssd1306_command(row, 3);
@@ -251,11 +255,11 @@ void new_window(const ComType com, const NewWindow *data) {
 void clear_window(const ComType com, const ClearWindow *data) {
 	const uint16_t bytes_in_window = (BC->column_to-BC->column_from+1)*(BC->row_to-BC->row_from+1);
 
-    for(uint8_t page = 0; page < bytes_in_window/64; page++) {
-    	ssd1306_data(NULL, 64);
+    for(uint8_t page = 0; page < bytes_in_window/PIXEL_W; page++) {
+    	ssd1306_data(NULL, PIXEL_W);
     }
 
-    const uint8_t rest = bytes_in_window - 64*(bytes_in_window/64);
+    const uint8_t rest = bytes_in_window - PIXEL_W*(bytes_in_window/PIXEL_W);
     if(rest > 0) {
     	ssd1306_data(NULL, rest);
     }
@@ -298,14 +302,14 @@ void get_display_configuration(const ComType com, const GetDisplayConfiguration 
 }
 
 void write_line(const ComType com, const WriteLine *data) {
-	if(data->line > 5 || data->position > 12) {
+	if(data->line > MAX_CHARS_H-1 || data->position > MAX_CHARS_W-1) {
 		BA->com_return_error(data, sizeof(MessageHeader), MESSAGE_ERROR_CODE_INVALID_PARAMETER, com);
 		return;
 	}
 
-	for(uint8_t i = 0; i < 13; i++) {
+	for(uint8_t i = 0; i < MAX_CHARS_W; i++) {
 		const uint8_t pos = i + data->position;
-		if(data->text[i] == '\0' || pos > 12) {
+		if(data->text[i] == '\0' || pos > MAX_CHARS_W-1) {
 			break;
 		}
 
@@ -341,6 +345,9 @@ void ssd1306_data(const uint8_t *data, const uint8_t length) {
 		}
 	}
 
+	PIN_SDI.pio->PIO_CODR = PIN_SDI.mask;
+	PIN_CLK.pio->PIO_CODR = PIN_CLK.mask;
+	SLEEP_US(10);
 	PIN_CS.pio->PIO_SODR = PIN_CS.mask;
 
 #ifdef USE_I2C
@@ -378,7 +385,10 @@ void ssd1306_command(const uint8_t *command, const uint8_t length) {
 		spibb_send_byte(command[i]);
 	}
 
-	PIN_CS.pio->PIO_SODR = PIN_CS.mask;
+	PIN_SDI.pio->PIO_CODR = PIN_SDI.mask;
+	PIN_CLK.pio->PIO_CODR = PIN_CLK.mask;
+	SLEEP_US(10);
+	PIN_CS.pio->PIO_SODR = PIN_CS.mask;;
 
 #ifdef USE_I2C
 	i2c_start();
@@ -410,7 +420,8 @@ void spibb_send_byte(const uint8_t value) {
 		SLEEP_US(1);
 	}
 
-	// Make sure clock is low when no data transfer is taking place.
+	// Make sure clock and data is low when no data transfer is taking place.
+	PIN_SDI.pio->PIO_CODR = PIN_SDI.mask;
 	PIN_CLK.pio->PIO_CODR = PIN_CLK.mask;
 }
 #endif
