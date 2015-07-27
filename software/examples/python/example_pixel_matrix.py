@@ -13,15 +13,17 @@ from tinkerforge.bricklet_oled_64x48 import BrickletOLED64x48, OLED64x48
 def draw_matrix(pixels):
     column = []
 
-    for i in range(6):
+    for i in range(SCREEN_HEIGHT//8):
         column.append([])
 
         for j in range(SCREEN_WIDTH):
             page = 0
 
             for k in range(8):
-                if pixels[i*8 + k][j] == True:
+                if pixels[i*8 + k][j]:
                     page |= 1 << k
+
+                print i, j, k, pixels[i*8 + k][j], page
 
             column[i].append(page)
 
@@ -46,9 +48,9 @@ if __name__ == "__main__":
     # Draw check pattern
     for w in range(SCREEN_WIDTH):
         for h in range(SCREEN_HEIGHT):
-            if w/5 % 2 == 0:
+            if w//5 % 2 == 0:
                 pixel_matrix[h][w] = True
-            if h/5 % 2 == 0:
+            if h//5 % 2 == 0:
                 pixel_matrix[h][w] = True
         
     draw_matrix(pixel_matrix)
