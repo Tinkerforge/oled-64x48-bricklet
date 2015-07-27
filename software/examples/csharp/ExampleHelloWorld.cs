@@ -1,11 +1,10 @@
-using System;
 using Tinkerforge;
 
 class Example
 {
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
-	private static string UID = "ABC2"; // Change to your UID
+	private static string UID = "XYZ"; // Change to your UID
 
 	static void Main()
 	{

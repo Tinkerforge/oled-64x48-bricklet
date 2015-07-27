@@ -8,7 +8,7 @@ include Tinkerforge
 
 HOST = 'localhost'
 PORT = 4223
-UID = 'ABC2' # Change to your UID
+UID = 'XYZ' # Change to your UID
 SCREEN_WIDTH = 64
 SCREEN_HEIGHT = 48
 

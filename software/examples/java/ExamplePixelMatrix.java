@@ -1,10 +1,10 @@
-import com.tinkerforge.BrickletOLED64x48;
 import com.tinkerforge.IPConnection;
+import com.tinkerforge.BrickletOLED64x48;
 
 public class ExamplePixelMatrix {
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
-	private static final String UID = "ABC2"; // Change to your UID
+	private static final String UID = "XYZ"; // Change to your UID
 	private static final short SCREEN_WIDTH = 64;
 	private static final short SCREEN_HEIGHT = 48;
 

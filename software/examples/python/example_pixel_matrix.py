@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-  
+# -*- coding: utf-8 -*-
 
 HOST = "localhost"
 PORT = 4223
-UID = "ABC2" # Change to your UID
+UID = "XYZ" # Change to your UID
 SCREEN_WIDTH = 64
 SCREEN_HEIGHT = 48
 
 from tinkerforge.ip_connection import IPConnection
-from tinkerforge.bricklet_oled_64x48 import BrickletOLED64x48, OLED64x48
+from tinkerforge.bricklet_oled_64x48 import OLED64x48
 
 def draw_matrix(pixels):
     column = []

@@ -5,7 +5,7 @@
 
 #define HOST "localhost"
 #define PORT 4223
-#define UID "ABC2" // Change to your UID
+#define UID "XYZ" // Change to your UID
 #define SCREEN_WIDTH 64
 #define SCREEN_HEIGHT 48
 
@@ -43,7 +43,7 @@ int main() {
 
 	// Create device object
 	OLED64x48 oled;
-	oled_64x48_create(&oled, UID, &ipcon); 
+	oled_64x48_create(&oled, UID, &ipcon);
 
 	int i = 0;
 	int j = 0;
