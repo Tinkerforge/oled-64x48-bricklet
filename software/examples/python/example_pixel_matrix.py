@@ -23,8 +23,6 @@ def draw_matrix(pixels):
                 if pixels[i*8 + k][j]:
                     page |= 1 << k
 
-                print i, j, k, pixels[i*8 + k][j], page
-
             column[i].append(page)
 
     oled.new_window(0, SCREEN_WIDTH-1, 0, 5)
