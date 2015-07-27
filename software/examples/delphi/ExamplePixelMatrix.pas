@@ -4,7 +4,7 @@ program ExamplePixelMatrix;
 {$ifdef FPC}{$mode OBJFPC}{$H+}{$endif}
 
 uses
-  SysUtils, IPConnection, BrickletOLED64x48;
+  SysUtils, Math, IPConnection, BrickletOLED64x48;
 
 const
   HOST = 'localhost';
@@ -14,7 +14,7 @@ const
   SCREEN_HEIGHT = 48;
 
 type
-  TPixelMatrix = array[0..SCREEN_HEIGHT - 1, 0..SCREEN_WIDTH - 1] of boolean;
+  TPixelMatrix = array[0..(SCREEN_HEIGHT - 1), 0..(SCREEN_WIDTH - 1)] of boolean;
   TExample = class
   private
     ipcon: TIPConnection;
@@ -31,30 +31,32 @@ procedure TExample.DrawMatrix(pixels: TPixelMatrix);
 var
   i, j, k: integer;
   page: byte;
-  column: array[0..5, 0..SCREEN_WIDTH - 1] of byte;
-
+  column: array[0..5, 0..(SCREEN_WIDTH - 1)] of byte;
 begin
-
   for i := 0 to 5 do
+  begin
     for j := 0 to SCREEN_WIDTH - 1 do
+    begin
       page := 0;
-
-      for k := 0 to 7 do
-        if (pixels[(i*8) + k, j] = true) then
+      for k := 0 to 7 do begin
+        if (pixels[(i*8) + k, j]) then begin
           page := page or (1 << k);
+        end;
+      end;
 
       column[i][j] := page;
-
+    end;
+  end;
   oled.NewWindow(0, SCREEN_WIDTH - 1, 0, 5);
-
-  for i := 0 to 5 do
+  for i := 0 to 5 do begin
     oled.write(column[i]);
+  end;
 end;
 
 procedure TExample.Execute;
 var
   pixel_matrix: TPixelMatrix;
-  i, j: integer;
+  w, h, p: integer;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -70,17 +72,23 @@ begin
   oled.ClearDisplay;
 
   { Pixel matrix with all pixels turned off }
-  for i := 0 to SCREEN_HEIGHT - 1 do
-    for j := 0 to SCREEN_WIDTH - 1 do
-      pixel_matrix[i, j] := false;
+  for h := 0 to SCREEN_HEIGHT - 1 do begin
+    for w := 0 to SCREEN_WIDTH - 1 do begin
+      pixel_matrix[h, w] := false;
+    end;
+  end;
 
   { Draw check pattern }
-  for i := 0 to SCREEN_WIDTH - 1 do
-    for j := 0 to SCREEN_HEIGHT - 1 do
-      if (Int64(i/5) mod 2 = 0) then
-        pixel_matrix[j, i] := true;
-      if (Int64(j/5) mod 2 = 0) then
-        pixel_matrix[j, i] := true;
+  for w := 0 to SCREEN_WIDTH - 1 do begin
+    for h := 0 to SCREEN_HEIGHT - 1 do begin
+      if (Floor(w/5) mod 2 = 0) then begin
+        pixel_matrix[h, w] := true;
+      end;
+      if (Floor(h/5) mod 2 = 0) then begin
+        pixel_matrix[h, w] := true;
+      end;
+    end;
+  end;
 
   e.DrawMatrix(pixel_matrix);
 
