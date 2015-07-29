@@ -2,7 +2,7 @@ var Tinkerforge = require('tinkerforge');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = 'ABC2'; // Change to your UID
+var UID = 'XYZ'; // Change to your UID
 var SCREEN_WIDTH = 64;
 var SCREEN_HEIGHT = 48;
 
@@ -61,10 +61,10 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 		// Draw check pattern
 		for (var w = 0; w < SCREEN_WIDTH; w++) {
 			for (var h = 0; h < SCREEN_HEIGHT; h++) {
-				if (w/5 % 2 == 0) {
+				if (Math.floor(w/5) % 2 == 0) {
 					pixelMatrix[h][w] = true;
 				}
-				if (h/5 % 2 == 0) {
+				if (Math.floor(h/5) % 2 == 0) {
 					pixelMatrix[h][w] = true;
 				}
 			}
