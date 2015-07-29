@@ -50,7 +50,7 @@ if __name__ == "__main__":
                 pixel_matrix[h][w] = True
             if h//5 % 2 == 0:
                 pixel_matrix[h][w] = True
-        
+
     draw_matrix(pixel_matrix)
 
     raw_input('Press key to exit\n') # Use input() in Python 3
