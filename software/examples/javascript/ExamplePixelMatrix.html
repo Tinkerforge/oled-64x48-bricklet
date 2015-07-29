@@ -79,10 +79,10 @@
 						// Draw check pattern
 						for (var w = 0; w < SCREEN_WIDTH; w++) {
 							for (var h = 0; h < SCREEN_HEIGHT; h++) {
-								if (w/5 % 2 == 0) {
+								if (Math.floor(w/5) % 2 == 0) {
 									pixelMatrix[h][w] = true;
 								}
-								if (h/5 % 2 == 0) {
+								if (Math.floor(h/5) % 2 == 0) {
 									pixelMatrix[h][w] = true;
 								}
 							}
