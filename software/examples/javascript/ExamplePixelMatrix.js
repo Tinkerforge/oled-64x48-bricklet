@@ -12,11 +12,11 @@ var oled = new Tinkerforge.BrickletOLED64x48(UID, ipcon); // Create device objec
 function drawMatrix(oled, pixels) {
 	column = [];
 
-	for (var i = 0; i < 6; i++) {
+	for (var i = 0; i < SCREEN_HEIGHT/8; i++) {
 		column[i] = [];
 	}
 
-	for (var i = 0; i < 6; i++) {
+	for (var i = 0; i < SCREEN_HEIGHT/8; i++) {
 		for (var j = 0; j < SCREEN_WIDTH; j++) {
 			page = 0;
 
@@ -31,7 +31,7 @@ function drawMatrix(oled, pixels) {
 
 	oled.newWindow(0, SCREEN_WIDTH-1, 0, 5)
 
-	for (var i = 0; i < 6; i++) {
+	for (var i = 0; i < SCREEN_HEIGHT/8; i++) {
 		oled.write(column[i])
 	}
 }

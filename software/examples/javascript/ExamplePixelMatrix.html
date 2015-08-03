@@ -27,10 +27,10 @@
 
 			function drawMatrix(oled, pixels) {
 				column = [];
-				for (var i = 0; i < 6; i++) {
+				for (var i = 0; i < SCREEN_HEIGHT/8; i++) {
 					column[i] = [];
 				}
-				for (var i = 0; i < 6; i++) {
+				for (var i = 0; i < SCREEN_HEIGHT/8; i++) {
 					for (var j = 0; j < SCREEN_WIDTH; j++) {
 						page = 0;
 
