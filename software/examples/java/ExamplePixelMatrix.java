@@ -10,13 +10,14 @@ public class ExamplePixelMatrix {
 
 	static void drawMatrix(BrickletOLED64x48 oled, boolean[][] pixels) throws Exception {
 		short[][] column = new short[6][SCREEN_WIDTH];
+		short page = 0;
 		short i, j, k = 0;
 
 		for (i = 0; i < SCREEN_HEIGHT/8; i++)
 		{
 			for (j = 0; j < SCREEN_WIDTH; j++)
 			{
-				short page = 0;
+				page = 0;
 
 				for (k = 0; k < 8; k++)
 				{
