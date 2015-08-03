@@ -10,9 +10,9 @@ function octave_example_pixel_matrix()
     function draw_matrix(oled, pixels)
         SCREEN_WIDTH = 64;
         SCREEN_HEIGHT = 48;
-        column = cell(1, 6);
+        column = cell(1, SCREEN_HEIGHT/8);
         for i = 1:(SCREEN_HEIGHT/8) - 1
-            column{i} = zeros(1,64);
+            column{i} = zeros(1, 64);
             for j = 1:SCREEN_WIDTH
                 page = 0;
                 for k = 0:7

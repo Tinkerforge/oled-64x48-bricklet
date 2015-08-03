@@ -9,9 +9,9 @@ function matlab_example_pixel_matrix()
     SCREEN_HEIGHT = 48;
 
     function draw_matrix(oled, pixels)
-        column = cell(1, 6);
+        column = cell(1, SCREEN_HEIGHT/8);
         for i = 1:(SCREEN_HEIGHT/8) - 1
-            column{i} = zeros(1,64);
+            column{i} = zeros(1, 64);
             for j = 1:SCREEN_WIDTH
                 page = 0;
                 for k = 0:7
