@@ -3,7 +3,7 @@
 
 HOST = "localhost"
 PORT = 4223
-UID = "ABC2" # Change to your UID
+UID = "XYZ" # Change to your UID
 SCREEN_WIDTH = 64
 SCREEN_HEIGHT = 48
 
@@ -14,7 +14,7 @@ from tinkerforge.bricklet_oled_64x48 import BrickletOLED64x48, OLED64x48
 def draw_matrix(pixels):
     column = []
 
-    for i in range(6):
+    for i in range(SCREEN_HEIGHT//8):
         column.append([])
 
         for j in range(SCREEN_WIDTH):
@@ -27,7 +27,7 @@ def draw_matrix(pixels):
 
     oled.new_window(0, SCREEN_WIDTH-1, 0, 5)
 
-    for i in range(6):
+    for i in range(SCREEN_HEIGHT//8):
         oled.write(column[i])
 
 if __name__ == "__main__":
