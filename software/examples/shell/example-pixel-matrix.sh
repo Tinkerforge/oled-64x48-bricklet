@@ -28,7 +28,7 @@ function draw_matrix {
 			column[${i},${j}]=${page}
 		done
 	done
-	./tinkerforge call oled-64x48-bricklet ${uid} new-window 0 $((${screen_width}-1)) 0 5
+	tinkerforge call oled-64x48-bricklet ${uid} new-window 0 $((${screen_width}-1)) 0 5
 
 	for ((i=0; i<${screen_height}/8; i++))
 	do
@@ -42,12 +42,12 @@ function draw_matrix {
 			fi
 			write_bytes+=","
 		done
-		./tinkerforge call oled-64x48-bricklet ${uid} write ${write_bytes}
+		tinkerforge call oled-64x48-bricklet ${uid} write ${write_bytes}
 	done
 }
 
 # clear display
-./tinkerforge call oled-64x48-bricklet ${uid} clear-display
+tinkerforge call oled-64x48-bricklet ${uid} clear-display
 
 # Pixel matrix with all pixels turned off
 declare -A pixel_matrix
