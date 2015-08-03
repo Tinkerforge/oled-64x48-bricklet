@@ -10,14 +10,15 @@ public class ExamplePixelMatrix {
 
 	static void drawMatrix(BrickletOLED64x48 oled, boolean[][] pixels) throws Exception {
 		short[][] column = new short[6][SCREEN_WIDTH];
+		short i, j, k = 0;
 
-		for (short i = 0; i < (short)6; i++)
+		for (i = 0; i < SCREEN_HEIGHT/8; i++)
 		{
-			for (short j = 0; j < SCREEN_WIDTH; j++)
+			for (j = 0; j < SCREEN_WIDTH; j++)
 			{
 				short page = 0;
 
-				for (short k = 0; k < (short)8; k++)
+				for (k = 0; k < 8; k++)
 				{
 					if (pixels[(i*8)+k][j] == true)
 					{
@@ -30,7 +31,7 @@ public class ExamplePixelMatrix {
 
 		oled.newWindow((short)0, (short)(SCREEN_WIDTH-1), (short)0, (short)5);
 
-		for (short i = 0; i < (short)6; i++)
+		for (i = 0; i < SCREEN_HEIGHT/8; i++)
 		{
 			oled.write(column[i]);
 		}
