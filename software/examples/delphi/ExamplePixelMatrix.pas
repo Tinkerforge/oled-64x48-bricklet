@@ -56,7 +56,7 @@ end;
 procedure TExample.Execute;
 var
   pixel_matrix: TPixelMatrix;
-  w, h, p: integer;
+  w, h: integer;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
