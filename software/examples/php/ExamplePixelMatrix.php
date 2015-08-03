@@ -8,7 +8,7 @@ use Tinkerforge\BrickletOLED64x48;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'ABC2'; // Change to your UID
+const UID = 'XYZ'; // Change to your UID
 const SCREEN_WIDTH = 64;
 const SCREEN_HEIGHT = 48;
 
@@ -16,7 +16,7 @@ function drawMatrix($oled, $pixels)
 {
 	$column = array(array());
 
-	for ($i = 0; $i < 6; $i++)
+	for ($i = 0; $i < SCREEN_HEIGHT/8; $i++)
 	{
 		for ($j = 0; $j < SCREEN_WIDTH; $j++)
 		{
@@ -35,7 +35,7 @@ function drawMatrix($oled, $pixels)
 	}
 	$oled->newWindow(0, SCREEN_WIDTH-1, 0, 5);
 
-	for ($i = 0; $i < 6; $i++)
+	for ($i = 0; $i < SCREEN_HEIGHT/8; $i++)
 	{
 		$oled->write($column[$i]);
 	}
