@@ -32,7 +32,7 @@ sub draw_matrix {
 	}
 	$oled->new_window(0, &SCREEN_WIDTH-1, 0, 5);
 
-	foreach my $i (0..5) {
+	foreach my $i (0..SCREEN_HEIGHT/8-1) {
 		$oled->write($column[$i]);
 	}
 }
