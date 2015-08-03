@@ -15,7 +15,7 @@ SCREEN_HEIGHT = 48
 def draw_matrix(oled, pixels)
 	column = []
 
-	for i in 0..5
+	for i in 0..SCREEN_HEIGHT/8 - 1
 		column[i] = []
 
 		for j in 0..SCREEN_WIDTH-1
@@ -33,7 +33,7 @@ def draw_matrix(oled, pixels)
 
 	oled.new_window(0, SCREEN_WIDTH-1, 0, 5)
 
-	for i in 0..5
+	for i in 0..SCREEN_HEIGHT/8 - 1
 		oled.write(column[i])
 	end
 end
