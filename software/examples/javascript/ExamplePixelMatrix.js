@@ -37,16 +37,16 @@ function drawMatrix(oled, pixels) {
 }
 
 ipcon.connect(HOST, PORT,
-	function(error) {
-		console.log('Error: '+error);
-	}
+    function (error) {
+        console.log('Error: ' + error);
+    }
 ); // Connect to brickd
 // Don't use device before ipcon is connected
 
 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-	function(connectReason) {
-		// Clear display
-		oled.clearDisplay();
+    function (connectReason) {
+        // Clear display
+        oled.clearDisplay();
 
 		// Pixel matrix with all pixels turned off
 		var pixelMatrix = [];
@@ -70,13 +70,13 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
 			}
 		}
 		drawMatrix(oled, pixelMatrix);
-	}
+    }
 );
 
-console.log("Press any key to exit ...");
+console.log('Press key to exit');
 process.stdin.on('data',
-	function(data) {
-		ipcon.disconnect();
-		process.exit(0);
-	}
+    function (data) {
+        ipcon.disconnect();
+        process.exit(0);
+    }
 );

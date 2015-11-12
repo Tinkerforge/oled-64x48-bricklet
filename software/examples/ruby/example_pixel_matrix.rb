@@ -70,7 +70,7 @@ for w in 0..SCREEN_WIDTH-1
 	end
 end
 
-draw_matrix(oled, pixel_matrix)
+draw_matrix oled, pixel_matrix
 
 puts 'Press key to exit'
 $stdin.gets

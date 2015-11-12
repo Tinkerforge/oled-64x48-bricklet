@@ -6,7 +6,7 @@
     </head>
     <body>
         <div style="text-align:center;">
-            <h1>Oled 64x48 Bricklet Hello World Example</h1>
+            <h1>OLED 64x48 Bricklet Hello World Example</h1>
             <p>
                 <input value="localhost" id="host" type="text" size="20">:
                 <input value="4280" id="port" type="text" size="5">,
@@ -34,15 +34,16 @@
                 var oled = new Tinkerforge.BrickletOLED64x48(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
                 ); // Connect to brickd
                 // Don't use device before ipcon is connected
 
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
+                    function (connectReason) {
                         // Clear display
                         oled.clearDisplay();
+
                         // Write "Hello World" starting from upper left corner of the screen
                         oled.writeLine(0, 0, 'Hello World');
                     }

@@ -41,7 +41,7 @@ function octave_example_pixel_matrix()
     % Boolean matrix with all pixels turned off
     pixel_matrix = false(SCREEN_HEIGHT, SCREEN_WIDTH);
 
-    %Draw check pattern
+    % Draw check pattern
     for w = 1:SCREEN_WIDTH
         for h = 1:SCREEN_HEIGHT
             if mod(floor(w/5), 2) == 0
@@ -55,6 +55,6 @@ function octave_example_pixel_matrix()
 
     draw_matrix(oled, pixel_matrix);
 
-    input("Press any key to exit...\n", "s");
+    input("Press key to exit\n", "s");
     ipcon.disconnect();
 end

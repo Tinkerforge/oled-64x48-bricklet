@@ -42,7 +42,7 @@ sub draw_matrix {
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Don't use device before ipcon is connected
 
-#Clear display
+# Clear display
 $oled->clear_display();
 
 # Pixel matrix with all pixels turned off
@@ -68,6 +68,6 @@ foreach my $w (0..&SCREEN_WIDTH-1) {
 
 draw_matrix($oled, \@pixel_matrix);
 
-print "Press any key to exit...\n";
+print "Press key to exit\n";
 <STDIN>;
 $ipcon->disconnect();

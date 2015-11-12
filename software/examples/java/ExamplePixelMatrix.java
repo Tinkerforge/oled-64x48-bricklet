@@ -38,8 +38,8 @@ public class ExamplePixelMatrix {
 		}
 	}
 
-	// Note: To make the example code cleaner we do not handle exceptions. Exceptions you
-	//       might normally want to catch are described in the documentation
+	// Note: To make the example code cleaner we do not handle exceptions. Exceptions
+	//       you might normally want to catch are described in the documentation
 	public static void main(String args[]) throws Exception {
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickletOLED64x48 oled = new BrickletOLED64x48(UID, ipcon); // Create device object

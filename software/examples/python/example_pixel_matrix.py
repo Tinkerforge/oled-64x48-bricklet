@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # Clear display
     oled.clear_display()
     
-    # Pixel matrix with all pixels turned off
+    # Boolean matrix with all pixels turned off
     pixel_matrix = [[False]*SCREEN_WIDTH for i in range(SCREEN_HEIGHT)]
 
     # Draw check pattern
@@ -53,5 +53,5 @@ if __name__ == "__main__":
 
     draw_matrix(pixel_matrix)
 
-    raw_input('Press key to exit\n') # Use input() in Python 3
+    raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()

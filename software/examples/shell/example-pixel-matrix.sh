@@ -1,10 +1,9 @@
 #!/bin/bash
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
 # This example requires Bash 4
 
-# change to your UID
-uid=XYZ
+uid=XYZ # Change to your UID
 
 screen_width=64
 screen_height=48
@@ -46,8 +45,8 @@ function draw_matrix {
 	done
 }
 
-# clear display
-tinkerforge call oled-64x48-bricklet ${uid} clear-display
+# Clear display
+tinkerforge call oled-64x48-bricklet $uid clear-display
 
 # Pixel matrix with all pixels turned off
 declare -A pixel_matrix

@@ -81,10 +81,11 @@ class Example
 				}
 			}
 		}
+
 		DrawMatrix(oled, pixelMatrix);
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

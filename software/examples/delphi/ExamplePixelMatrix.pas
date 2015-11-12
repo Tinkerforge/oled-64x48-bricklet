@@ -16,8 +16,8 @@ type
   private
     ipcon: TIPConnection;
     oled: TBrickletOLED64x48;
-    procedure DrawMatrix(pixels: TPixelMatrix);
   public
+    procedure DrawMatrix(pixels: TPixelMatrix);
     procedure Execute;
   end;
 
