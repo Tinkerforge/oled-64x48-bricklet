@@ -11,9 +11,7 @@
 
 void draw_matrix(OLED64x48 *oled, bool (*pixels)[SCREEN_WIDTH]) {
 	uint8_t column[SCREEN_HEIGHT/8][SCREEN_WIDTH];
-	int i = 0;
-	int j = 0;
-	int k = 0;
+	int i, j, k;
 	uint8_t page = 0;
 
 	for (i = 0; i < SCREEN_HEIGHT/8; i++) {
@@ -46,12 +44,6 @@ int main(void) {
 	OLED64x48 oled;
 	oled_64x48_create(&oled, UID, &ipcon);
 
-	int i = 0;
-	int j = 0;
-	int w = 0;
-	int h = 0;
-	bool pixel_matrix[SCREEN_HEIGHT][SCREEN_WIDTH];
-
 	// Connect to brickd
 	if(ipcon_connect(&ipcon, HOST, PORT) < 0) {
 		fprintf(stderr, "Could not connect\n");
@@ -62,23 +54,13 @@ int main(void) {
 	// Clear display
 	oled_64x48_clear_display(&oled);
 
-	// Pixel matrix with all pixels turned off
-	for (i = 0; i < SCREEN_HEIGHT; i++) {
-		for (j = 0; j < SCREEN_WIDTH; j++) {
-			pixel_matrix[i][j] = false;
-		}
-	}
+	// Draw checkerboard pattern
+	int h, w;
+	bool pixel_matrix[SCREEN_HEIGHT][SCREEN_WIDTH];
 
-	// Draw check pattern
-	for (w = 0; w < SCREEN_WIDTH; w++) {
-		for (h = 0; h < SCREEN_HEIGHT; h++) {
-			if ((w/5) % 2 == 0) {
-				pixel_matrix[h][w] = true;
-			}
-
-			if ((h/5) % 2 == 0) {
-				pixel_matrix[h][w] = true;
-			}
+	for (h = 0; h < SCREEN_HEIGHT; h++) {
+		for (w = 0; w < SCREEN_WIDTH; w++) {
+			pixel_matrix[h][w] = (h / 8) % 2 == (w / 8) % 2;
 		}
 	}
 

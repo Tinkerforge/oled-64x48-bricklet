@@ -11,7 +11,7 @@ public class ExamplePixelMatrix {
 	static void drawMatrix(BrickletOLED64x48 oled, boolean[][] pixels) throws Exception {
 		short[][] column = new short[6][SCREEN_WIDTH];
 		short page = 0;
-		short i, j, k = 0;
+		short i, j, k;
 
 		for (i = 0; i < SCREEN_HEIGHT/8; i++)
 		{
@@ -50,24 +50,12 @@ public class ExamplePixelMatrix {
 		// Clear display
 		oled.clearDisplay();
 
+		// Draw checkerboard pattern
 		boolean[][] pixelMatrix = new boolean[SCREEN_HEIGHT][SCREEN_WIDTH];
 
-		// Pixel matrix with all pixels turned off
-		for (short i = 0; i < SCREEN_HEIGHT; i++) {
-			for (short j = 0; j < SCREEN_WIDTH; j++) {
-				pixelMatrix[i][j] = false;
-			}
-		}
-
-		// Draw check pattern
-		for (short w = 0; w < SCREEN_WIDTH; w++) {
-			for (short h = 0; h < SCREEN_HEIGHT; h++) {
-				if (w/5 % 2 == 0) {
-					pixelMatrix[h][w] = true;
-				}
-				if (h/5 % 2 == 0) {
-					pixelMatrix[h][w] = true;
-				}
+		for (short h = 0; h < SCREEN_HEIGHT; h++) {
+			for (short w = 0; w < SCREEN_WIDTH; w++) {
+				pixelMatrix[h][w] = (h / 8) % 2 == (w / 8) % 2;
 			}
 		}
 
