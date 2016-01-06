@@ -18,7 +18,7 @@ Module ExamplePixelMatrix
             For j As Integer = 0 To SCREEN_WIDTH - 1
                 page = 0
                 For k As Integer = 0 To 7
-                    If pixels((i*8) + k)(j) = True Then page = page Or (1 << k)
+                    If pixels((i*8) + k)(j) = True Then page = page Or Convert.ToByte(1 << k)
                 Next k
                 column(i)(j) = page
             Next j
