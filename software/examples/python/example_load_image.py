@@ -10,7 +10,7 @@ HEIGHT = 48
 import sys
 from PIL import Image
 from tinkerforge.ip_connection import IPConnection
-from tinkerforge.bricklet_oled_64x48 import BrickletOLED64x48, OLED64x48
+from tinkerforge.bricklet_oled_64x48 import BrickletOLED64x48
 
 def draw_matrix(oled, pixels):
     pages = []
@@ -36,7 +36,7 @@ def draw_matrix(oled, pixels):
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
-    oled = OLED64x48(UID, ipcon) # Create device object
+    oled = BrickletOLED64x48(UID, ipcon) # Create device object
 
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 
     # Convert image to black/white pixels
     image = Image.open(sys.argv[1])
+    image_data = image.load()
     pixels = []
 
     for row in range(HEIGHT):
@@ -53,7 +54,7 @@ if __name__ == "__main__":
 
         for column in range(WIDTH):
             if column < image.size[0] and row < image.size[1]:
-                pixel = image.getpixel((column, row)) > 0
+                pixel = image_data[column, row] > 0
             else:
                 pixel = False
 

@@ -6,39 +6,36 @@ class Example
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
 	private static string UID = "XYZ"; // Change to your UID
-	private static int SCREEN_WIDTH = 64;
-	private static int SCREEN_HEIGHT = 48;
+	private static int WIDTH = 64;
+	private static int HEIGHT = 48;
 
 	private static void DrawMatrix(BrickletOLED64x48 oled, bool[][] pixels)
 	{
-		byte[][] column = new byte[6][];
+		byte[][] pages = new byte[HEIGHT / 8][];
 
-		for (int i = 0; i < 6; i++)
+		for (int row = 0; row < HEIGHT / 8; row++)
 		{
-			column[i] = new byte[SCREEN_WIDTH];
-		}
+			pages[row] = new byte[WIDTH];
 
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < SCREEN_WIDTH; j++)
+			for (int column = 0; column < WIDTH; column++)
 			{
-				byte page = 0;
+				pages[row][column] = 0;
 
-				for (int k = 0; k < 8; k++)
+				for (int bit = 0; bit < 8; bit++)
 				{
-					if (pixels[(i*8)+k][j] == true)
+					if (pixels[(row * 8) + bit][column])
 					{
-						page |= (byte)(1 << k);
+						pages[row][column] |= (byte)(1 << bit);
 					}
 				}
-				column[i][j] = page;
 			}
 		}
-		oled.NewWindow(0, (byte)(SCREEN_WIDTH-1), 0, 5);
 
-		for (int i = 0; i < 6; i++)
+		oled.NewWindow(0, (byte)(WIDTH - 1), 0, (byte)(HEIGHT / 8 - 1));
+
+		for (int row = 0; row < HEIGHT / 8; row++)
 		{
-			oled.Write(column[i]);
+			oled.Write(pages[row]);
 		}
 	}
 
@@ -54,19 +51,19 @@ class Example
 		oled.ClearDisplay();
 
 		// Draw checkerboard pattern
-		bool[][] pixelMatrix = new bool[SCREEN_HEIGHT][];
+		bool[][] pixels = new bool[HEIGHT][];
 
-		for (int h = 0; h < SCREEN_HEIGHT; h++)
+		for (int row = 0; row < HEIGHT; row++)
 		{
-			pixelMatrix[h] = new bool[SCREEN_WIDTH];
+			pixels[row] = new bool[WIDTH];
 
-			for (int w = 0; w < SCREEN_WIDTH; w++)
+			for (int column = 0; column < WIDTH; column++)
 			{
-				pixelMatrix[h][w] = (h / 8) % 2 == (w / 8) % 2;
+				pixels[row][column] = (row / 8) % 2 == (column / 8) % 2;
 			}
 		}
 
-		DrawMatrix(oled, pixelMatrix);
+		DrawMatrix(oled, pixels);
 
 		Console.WriteLine("Press enter to exit");
 		Console.ReadLine();
