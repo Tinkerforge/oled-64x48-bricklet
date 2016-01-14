@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+use Math::Trig;
+use Term::ReadKey;
+use GD;
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickletOLED64x48;
 
@@ -12,10 +15,9 @@ use constant HEIGHT => 48;
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
 my $oled = Tinkerforge::BrickletOLED64x48->new(&UID, $ipcon); # Create device object
 
-sub draw_matrix
+sub draw_image
 {
-    my ($oled, $pixels_ref) = @_;
-    my @pixels = @{$pixels_ref};
+    my ($oled, $image) = @_;
     my @pages = ();
 
     foreach my $row (0..&HEIGHT / 8 - 1) {
@@ -25,7 +27,10 @@ sub draw_matrix
             $pages[$row][$column] = 0;
 
             foreach my $bit (0..7) {
-                if ($pixels[($row * 8) + $bit][$column]) {
+                my $index = $image->getPixel($column, ($row * 8) + $bit);
+                my @rgb = $image->rgb($index);
+
+                if (@rgb[0] > 0) {
                     $pages[$row][$column] |= 1 << $bit;
                 }
             }
@@ -45,19 +50,31 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Clear display
 $oled->clear_display();
 
-# Draw checkerboard pattern
-my @pixels = ();
-
-foreach my $row (0..&HEIGHT - 1) {
-    $pixels[$row] = ();
-
-    foreach my $column (0..&WIDTH - 1) {
-        $pixels[$row][$column] = (($row / 8) % 2) == (($column / 8) % 2);
-    }
-}
-
-draw_matrix($oled, \@pixels);
+# Draw rotating line
+my $image = new GD::Image(&WIDTH, &HEIGHT);
+my $white = $image->colorAllocate(255, 255, 255);
+my $black = $image->colorAllocate(0, 0, 0);
+my $origin_x = &WIDTH / 2;
+my $origin_y = &HEIGHT / 2;
+my $length = &HEIGHT / 2 - 2;
+my $angle = 0;
 
 print "Press key to exit\n";
-<STDIN>;
+ReadMode(4);
+
+while (!defined(ReadKey(-1))) {
+    my $radians = pi * $angle / 180.0;
+    my $x = int($origin_x + $length * cos($radians));
+    my $y = int($origin_y + $length * sin($radians));
+
+    $image->filledRectangle(0, 0, &WIDTH, &HEIGHT, $black);
+    $image->line($origin_x, $origin_y, $x, $y, $white);
+
+    draw_image($oled, $image);
+    sleep 0.025;
+
+    $angle++;
+}
+
+ReadMode(0);
 $ipcon->disconnect();
