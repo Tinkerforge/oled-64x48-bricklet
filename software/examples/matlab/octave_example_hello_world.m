@@ -3,7 +3,7 @@ function octave_example_hello_world()
 
     HOST = "localhost";
     PORT = 4223;
-    UID = "XYZ"; % Change to your UID
+    UID = "XYZ"; % Change XYZ to the UID of your OLED 64x48 Bricklet
 
     ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
     oled = java_new("com.tinkerforge.BrickletOLED64x48", UID, ipcon); % Create device object

@@ -24,7 +24,7 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'abc'; { Change to your UID }
+  UID = 'XYZ'; { Change XYZ to the UID of your OLED 64x48 Bricklet }
 
 var
   e: TExample;

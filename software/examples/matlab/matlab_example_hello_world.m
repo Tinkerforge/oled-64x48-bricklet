@@ -4,7 +4,7 @@ function matlab_example_hello_world()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = 'XYZ'; % Change to your UID
+    UID = 'XYZ'; % Change XYZ to the UID of your OLED 64x48 Bricklet
 
     ipcon = IPConnection(); % Create IP connection
     oled = handle(BrickletOLED64x48(UID, ipcon), 'CallbackProperties'); % Create device object

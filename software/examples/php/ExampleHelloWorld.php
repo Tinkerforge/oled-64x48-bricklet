@@ -8,7 +8,7 @@ use Tinkerforge\BrickletOLED64x48;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'XYZ'; // Change to your UID
+const UID = 'XYZ'; // Change XYZ to the UID of your OLED 64x48 Bricklet
 
 $ipcon = new IPConnection(); // Create IP connection
 $oled = new BrickletOLED64x48(UID, $ipcon); // Create device object
