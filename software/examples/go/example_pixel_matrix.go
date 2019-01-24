@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-    "github.com/Tinkerforge/go-api-bindings/ipconnection"
-    "github.com/Tinkerforge/go-api-bindings/oled_64x48_bricklet"
+	"github.com/Tinkerforge/go-api-bindings/ipconnection"
+	"github.com/Tinkerforge/go-api-bindings/oled_64x48_bricklet"
 )
 
 const ADDR string = "localhost:4223"
@@ -33,17 +33,17 @@ func drawMatrix(oled oled_64x48_bricklet.OLED64x48Bricklet, pixels [HEIGHT][WIDT
 
 func main() {
 	ipcon := ipconnection.New()
-    defer ipcon.Close()
+	defer ipcon.Close()
 	oled, _ := oled_64x48_bricklet.New(UID, &ipcon) // Create device object.
 
 	ipcon.Connect(ADDR) // Connect to brickd.
-    defer ipcon.Disconnect()
+	defer ipcon.Disconnect()
 	// Don't use device before ipcon is connected.
 
 	// Clear display
 	oled.ClearDisplay()
 
-    // Draw checkerboard pattern
+	// Draw checkerboard pattern
 	var pixels [HEIGHT][WIDTH]bool
 	for rowIdx, row := range pixels {
 		for colIdx := range row {
@@ -55,6 +55,4 @@ func main() {
 
 	fmt.Print("Press enter to exit.")
 	fmt.Scanln()
-
-	ipcon.Disconnect()
 }
