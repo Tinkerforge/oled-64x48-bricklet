@@ -32,7 +32,7 @@ Module ExampleScribble
 
         For row As Integer = 0 To HEIGHT \ 8 - 1
             oled.Write(pages(row))
-        Next
+        Next row
     End Sub
 
     Sub Main()

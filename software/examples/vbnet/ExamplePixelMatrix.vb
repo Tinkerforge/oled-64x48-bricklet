@@ -30,7 +30,7 @@ Module ExamplePixelMatrix
 
         For row As Integer = 0 To HEIGHT \ 8 - 1
             oled.Write(pages(row))
-        Next
+        Next row
     End Sub
 
     Sub Main()
@@ -51,8 +51,8 @@ Module ExamplePixelMatrix
 
             For column As Integer = 0 To WIDTH - 1
                 pixels(row)(column) = (row \ 8) Mod 2 = (column \ 8) Mod 2
-            Next row
-        Next column
+            Next column
+        Next row
 
         DrawMatrix(oled, pixels)
 
